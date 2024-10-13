@@ -1,55 +1,53 @@
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material3.ElevatedCard
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.painterResource
+import moe.tlaster.precompose.PreComposeApp
+import moe.tlaster.precompose.navigation.NavHost
+import moe.tlaster.precompose.navigation.rememberNavigator
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import ui.BottomMenu
+import ui.RecordsActivity
+import ui.StatsActivity
+import ui.TrainingListActivity
 
-import gymprogress.composeapp.generated.resources.Res
-import gymprogress.composeapp.generated.resources.compose_multiplatform
 
 @Composable
 @Preview
 fun App() {
-    MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
-        Row {
-                ElevatedCard(
-                    elevation = CardDefaults.cardElevation(
-                        defaultElevation = 6.dp
-                    ),
-                    modifier = Modifier
-                        .size(width = 240.dp, height = 100.dp)
-                ) {
+    PreComposeApp {
+        val navigator = rememberNavigator()
+        NavHost(
+            navigator = navigator,
+            initialRoute = "/home"
+        ) {
+            scene(route = "/home") {
+                Scaffold(
+                    bottomBar = {
+                        BottomMenu(
+                            onClickTraining = "/training",
+                            onClickStats = "/stats",
+                            onClickRecords = "/records",
+                            navigator
+                        )
+                    }
+                ) { innerPadding ->
+                    // Yourscreen content goes here
                     Text(
-                        text = "Elevated",
-                        modifier = Modifier
-                            .padding(16.dp),
-                        textAlign = TextAlign.Center,
+                        text = "This is the main content area",
+                        modifier = Modifier.padding(innerPadding)
                     )
                 }
-
-
-        }
-        Column( horizontalAlignment = Alignment.CenterHorizontally) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
             }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Box(Modifier.fillMaxSize()) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
-                }
+            scene(route = "/training") {
+                TrainingListActivity(navigator)
+            }
+            scene(route = "/stats") {
+                StatsActivity(navigator)
+            }
+            scene(route = "/records") {
+                RecordsActivity(navigator)
             }
         }
     }
