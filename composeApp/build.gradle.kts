@@ -37,13 +37,16 @@ kotlin {
             implementation(compose.runtime)
             api(compose.foundation)
             api(compose.animation)
-            implementation(compose.material)
+            implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-            api(libs.precompose)
-            api(libs.precompose.viewmodel)
+            implementation(libs.navigation.compose)
 
+            //Koin dependancy injector
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
         }
     }
 }
@@ -82,6 +85,9 @@ android {
     }
     dependencies {
         debugImplementation(compose.uiTooling)
+
+        //Koin dependancy injector
+        implementation(libs.koin.android)
     }
 }
 dependencies {
