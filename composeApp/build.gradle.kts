@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.sqlDelight)
 }
 
 kotlin {
@@ -32,6 +33,7 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.sqldelight.android.driver)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -47,6 +49,15 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
+
+            //SQL Delight
+            implementation(libs.sqldelight.runtime)
+            implementation(libs.sqldelight.coroutines.extensions)
+            implementation(libs.kotlinx.datetime)
+        }
+        iosMain.dependencies {
+            //SqlDelightDriver
+            implementation(libs.sqldelight.native.driver)
         }
     }
 }
@@ -92,5 +103,13 @@ android {
 }
 dependencies {
     implementation(libs.androidx.material3.android)
+}
+
+sqldelight {
+    databases {
+        create("GymProgressDatabase") {
+            packageName.set("com.softwarecorriente.gymprogress.composeApp.db")
+        }
+    }
 }
 
