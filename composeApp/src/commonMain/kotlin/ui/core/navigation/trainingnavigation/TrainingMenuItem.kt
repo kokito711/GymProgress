@@ -1,4 +1,4 @@
-package ui.core.navigation.activitynavigation
+package ui.core.navigation.trainingnavigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -8,7 +8,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import ui.core.navigation.Routes
 
-sealed class ActivityBarItem {
+sealed class TrainingMenuItem {
     abstract val route: String
     abstract val title: String
     abstract var isActive: Boolean
@@ -24,7 +24,7 @@ sealed class ActivityBarItem {
                 contentDescription = ""
             )
         }
-    ) : ActivityBarItem()
+    ) : TrainingMenuItem()
 
     data class FinishSession(
         override val route: String = Routes.FinishSession.route,
@@ -33,7 +33,7 @@ sealed class ActivityBarItem {
         override val icon: @Composable () -> Unit = {
             Icon(imageVector = Icons.Default.Close, contentDescription = "")
         }
-    ) : ActivityBarItem()
+    ) : TrainingMenuItem()
 
     data class StartSession(
         override val route: String = Routes.StartSession.route,
@@ -42,5 +42,5 @@ sealed class ActivityBarItem {
         override val icon: @Composable () -> Unit = {
             Icon(imageVector = Icons.Default.PlayArrow, contentDescription = "")
         }
-    ) : ActivityBarItem()
+    ) : TrainingMenuItem()
 }

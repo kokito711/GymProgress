@@ -7,19 +7,27 @@ import androidx.navigation.compose.composable
 import ui.core.navigation.Routes
 import ui.home.tabs.records.RecordsScreen
 import ui.home.tabs.stats.StatsScreen
+import ui.home.tabs.training.AddActivity
+import ui.home.tabs.training.StartSession
 import ui.home.tabs.training.TrainingScreen
 
 @Composable
 fun NavigationBottomWrapper(navController: NavHostController) {
     NavHost(navController = navController, startDestination = Routes.Training.route) {
         composable(Routes.Training.route) {
-            TrainingScreen()
+            TrainingScreen(navController)
         }
         composable(Routes.Records.route) {
             RecordsScreen()
         }
         composable(Routes.Stats.route) {
             StatsScreen()
+        }
+        composable(Routes.AddActivity.route) {
+            AddActivity()
+        }
+        composable(Routes.StartSession.route) {
+            StartSession()
         }
     }
 }
