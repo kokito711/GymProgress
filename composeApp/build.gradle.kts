@@ -45,6 +45,9 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.navigation.compose)
 
+            //date time management
+            implementation(libs.kotlinx.datetime)
+
             //Koin dependancy injector
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
@@ -53,7 +56,6 @@ kotlin {
             //SQL Delight
             implementation(libs.sqldelight.runtime)
             implementation(libs.sqldelight.coroutines.extensions)
-            implementation(libs.kotlinx.datetime)
         }
         iosMain.dependencies {
             //SqlDelightDriver

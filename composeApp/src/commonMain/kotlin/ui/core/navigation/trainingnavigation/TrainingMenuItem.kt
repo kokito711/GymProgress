@@ -11,13 +11,11 @@ import ui.core.navigation.Routes
 sealed class TrainingMenuItem {
     abstract val route: String
     abstract val title: String
-    abstract var isActive: Boolean
     abstract val icon: @Composable () -> Unit
 
     data class AddActivity(
         override val route: String = Routes.AddActivity.route,
         override val title: String = "Add activity",
-        override var isActive: Boolean = false,
         override val icon: @Composable () -> Unit = {
             Icon(
                 imageVector = Icons.Default.Add,
@@ -29,7 +27,6 @@ sealed class TrainingMenuItem {
     data class FinishSession(
         override val route: String = Routes.FinishSession.route,
         override val title: String = "Finish session",
-        override var isActive: Boolean = false,
         override val icon: @Composable () -> Unit = {
             Icon(imageVector = Icons.Default.Close, contentDescription = "")
         }
@@ -38,7 +35,6 @@ sealed class TrainingMenuItem {
     data class StartSession(
         override val route: String = Routes.StartSession.route,
         override val title: String = "Start session",
-        override var isActive: Boolean = true,
         override val icon: @Composable () -> Unit = {
             Icon(imageVector = Icons.Default.PlayArrow, contentDescription = "")
         }
