@@ -1,4 +1,4 @@
-package ui.home.tabs.stats
+package ui.tabs.stats
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

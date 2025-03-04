@@ -1,4 +1,4 @@
-package ui.home.tabs.training
+package ui.tabs.training
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -29,9 +29,9 @@ import domain.model.training.Exercise
 import domain.model.training.TrainingViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.core.navigation.trainingnavigation.TrainingMenuItem
-import ui.home.elements.training.EmptyExerciseList
-import ui.home.elements.training.ExerciseList
-import ui.home.elements.training.TrainingDatePicker
+import ui.elements.training.EmptyExerciseList
+import ui.elements.training.ExerciseList
+import ui.elements.training.TrainingDatePicker
 
 
 @OptIn(ExperimentalMaterial3Api::class)

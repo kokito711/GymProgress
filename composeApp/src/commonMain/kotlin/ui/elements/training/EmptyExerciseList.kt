@@ -1,4 +1,4 @@
-package ui.home.elements.training
+package ui.elements.training
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

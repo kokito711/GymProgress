@@ -7,11 +7,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import ui.core.navigation.Routes
-import ui.home.tabs.records.RecordsScreen
-import ui.home.tabs.stats.StatsScreen
-import ui.home.tabs.training.AddActivity
-import ui.home.tabs.training.Session
-import ui.home.tabs.training.TrainingScreen
+import ui.tabs.records.RecordsScreen
+import ui.tabs.stats.StatsScreen
+import ui.tabs.training.AddActivity
+import ui.tabs.training.Session
+import ui.tabs.training.TrainingScreen
 
 @Composable
 fun NavigationBottomWrapper(navController: NavHostController) {

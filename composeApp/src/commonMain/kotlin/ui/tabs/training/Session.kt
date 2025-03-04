@@ -1,4 +1,4 @@
-package ui.home.tabs.training
+package ui.tabs.training
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
