@@ -25,17 +25,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import domain.model.training.Exercise
+import domain.model.training.Session
 import domain.model.training.TrainingViewModel
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.core.navigation.trainingnavigation.TrainingMenuItem
-import ui.elements.training.EmptyExerciseList
-import ui.elements.training.ExerciseList
 import ui.elements.training.TrainingDatePicker
+import ui.elements.training.session.EmptySessionList
+import ui.elements.training.session.SessionList
 
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview
 @Composable
 fun TrainingScreen(
     navController: NavHostController,
@@ -56,24 +54,24 @@ fun TrainingScreen(
             listOf(TrainingMenuItem.StartSession())
         }
     }
-    //val exercises: List<Exercise> = emptyList()
-    val exercises: List<Exercise> = listOf(
-        Exercise("Exercise 1", "30"),
-        Exercise("Exercise 2", "45"),
-        Exercise("Exercise 3", "60"),
-        Exercise("Exercise 4", "30"),
-        Exercise("Exercise 5", "45"),
-        Exercise("Exercise 6", "60"),
-        Exercise("Exercise 7", "30"),
-        Exercise("Exercise 8", "45"),
-        Exercise("Exercise 9", "60"),
-        Exercise("Exercise 10", "30"),
-        Exercise("Exercise 11", "45"),
-        Exercise("Exercise 12", "60"),
-        Exercise("Exercise 13", "30"),
-        Exercise("Exercise 14", "45"),
-        Exercise("Exercise 15", "60"),
-        Exercise("Exercise 16", "30"),
+    //val sessions: List<Session> = emptyList()
+    val sessions: List<Session> = listOf(
+        Session("Session 1", "30"),
+        Session("Session 2", "45"),
+        Session("Session 3", "60"),
+        Session("Session 4", "30"),
+        Session("Session 5", "45"),
+        Session("Session 6", "60"),
+        Session("Session 7", "30"),
+        Session("Session 8", "45"),
+        Session("Session 9", "60"),
+        Session("Session 10", "30"),
+        Session("Session 11", "45"),
+        Session("Session 12", "60"),
+        Session("Session 13", "30"),
+        Session("Session 14", "45"),
+        Session("Session 15", "60"),
+        Session("Session 16", "30"),
     )
 
     Column(Modifier.fillMaxSize()) {
@@ -113,10 +111,10 @@ fun TrainingScreen(
             modifier = Modifier
                 .background(Color.LightGray) // Optional background color
         ) {
-            if (exercises.isEmpty()) {
-                EmptyExerciseList()
+            if (sessions.isEmpty()) {
+                EmptySessionList()
             } else {
-                ExerciseList(exercises = exercises)
+                SessionList(sessions = sessions)
             }
         }
     }

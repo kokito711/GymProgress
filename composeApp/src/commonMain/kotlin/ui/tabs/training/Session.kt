@@ -1,31 +1,29 @@
 package ui.tabs.training
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import domain.model.training.Exercise
 import domain.model.training.TrainingViewModel
+import ui.elements.training.EmptyExerciseList
+import ui.elements.training.ExerciseList
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Session(
     navController: NavHostController,
@@ -33,36 +31,53 @@ fun Session(
     trainingViewModel: TrainingViewModel = viewModel()
 ) {
     val formattedDate = trainingViewModel.getFormattedDate(date)
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        // Header con la fecha
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.LightGray)
-                .padding(16.dp)
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+
+    //val exercises: List<Exercise> = emptyList()
+    val exercises: List<Exercise> = listOf(
+        Exercise("Exercise 1", "30"),
+        Exercise("Exercise 2", "45"),
+        Exercise("Exercise 3", "60"),
+        Exercise("Exercise 4", "30"),
+        Exercise("Exercise 5", "45"),
+        Exercise("Exercise 6", "60"),
+        Exercise("Exercise 7", "30"),
+        Exercise("Exercise 8", "45"),
+        Exercise("Exercise 9", "60"),
+        Exercise("Exercise 10", "30"),
+        Exercise("Exercise 11", "45"),
+        Exercise("Exercise 12", "60"),
+        Exercise("Exercise 13", "30"),
+        Exercise("Exercise 14", "45"),
+        Exercise("Exercise 15", "60"),
+        Exercise("Exercise 16", "30"),
+    )
+
+    Column(Modifier.fillMaxSize()) {
+        TopAppBar(
+            title = {
                 Text(
                     text = "Session Date: $formattedDate",
                     style = MaterialTheme.typography.headlineSmall
                 )
-                Button(onClick = { /* TODO: Acción para añadir ejercicios */ }) {
-                    Icon(imageVector = Icons.Filled.Add, contentDescription = "Add Exercise")
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(text = "Add Exercise")
+            },
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                titleContentColor = MaterialTheme.colorScheme.primary,
+            ),
+            actions = {
+                IconButton(onClick = { //TODO: Acción para añadir ejercicios
+                }) {
+                    Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
                 }
             }
-        }
-        Spacer(modifier = Modifier.height(16.dp))
+        )
         // Resto del contenido de la pantalla Session
-        Text(text = "Content of the session")
+        Box(modifier = Modifier.background(Color.LightGray)) {
+            if (exercises.isEmpty()) {
+                EmptyExerciseList()
+            } else {
+                ExerciseList(exercises = exercises)
+            }
+        }
     }
 }
