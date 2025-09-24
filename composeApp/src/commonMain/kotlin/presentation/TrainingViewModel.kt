@@ -1,15 +1,17 @@
-package domain.model.training
+package presentation
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import expects.logDebug
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 class TrainingViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() {
     private val _isSessionStarted =
@@ -33,14 +35,19 @@ class TrainingViewModel(private val savedStateHandle: SavedStateHandle) : ViewMo
         }
     }
 
-    fun getFormattedDate(dateMillis: Long?): String =
+    @OptIn(ExperimentalTime::class)
+    fun getFormattedDate(dateMillis: Long?): String {
+        logDebug("TrainingViewModel", "getFormattedDate called with: $dateMillis")
         if (dateMillis == null) {
-            "No date selected"
+            return "No date selected"
         } else {
             val instant = Instant.fromEpochMilliseconds(dateMillis)
             val dateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
-            "${dateTime.dayOfMonth}/${dateTime.monthNumber}/${dateTime.year}"
+            val formattedDate = "${dateTime.day}/${dateTime.month}/${dateTime.year}"
+            logDebug("TrainingViewModel", "getFormattedDate returning: $formattedDate")
+            return formattedDate
         }
+    }
 
     companion object {
         const val IS_SESSION_STARTED_KEY = "isSessionStarted"

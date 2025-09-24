@@ -26,7 +26,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import domain.model.training.Session
-import domain.model.training.TrainingViewModel
+import expects.logDebug
+import presentation.TrainingViewModel
 import ui.core.navigation.trainingnavigation.TrainingMenuItem
 import ui.elements.training.TrainingDatePicker
 import ui.elements.training.session.EmptySessionList
@@ -121,25 +122,55 @@ fun TrainingScreen(
 
     if (showDatePicker) {
         TrainingDatePicker(
-            onDateSelected = { date ->
-                trainingViewModel.setSelectedDate(date)
+            onDateSelected = { newSelectedDateMillis -> // Renombrado para claridad
+                logDebug("TrainingScreen", "Selected date (ms since epoch): $newSelectedDateMillis")
+                trainingViewModel.setSelectedDate(newSelectedDateMillis)
                 showDatePicker = false
+
+                val sessionPreviouslyStarted = trainingViewModel.isSessionStarted.value
+                val previousSelectedDateMillis = trainingViewModel.selectedDate.value
+
                 // Navigate only if a date is selected
                 selectedItem?.let { item ->
+                    // Si el ítem es para iniciar una sesión, marca la sesión como iniciada en el ViewModel.
+                    // Esto es importante para tu lógica condicional de restoreState
                     if (item is TrainingMenuItem.StartSession) {
                         trainingViewModel.setSessionStarted(true)
                     }
-                    navController.navigate(route = "${item.route}?date=${date}") {
+                    logDebug(
+                        "TrainingScreen",
+                        "Navigating to: ${item.route}?date=${newSelectedDateMillis}"
+                    )
+                    navController.navigate(route = "${item.route}?date=${newSelectedDateMillis}") {
                         //This goes to the stack and check if view is already created. If it does,
                         //Nav won´t open a new view and load the existing one
                         navController.graph.startDestinationRoute?.let { route ->
                             popUpTo(route) {
-                                saveState = true
+                                saveState =
+                                    true // Siempre guarda el estado de las pantallas de la bottom bar al hacer pop
                             }
                         }
-                        //Prevent to open the same view more than one time
-                        launchSingleTop = true
-                        restoreState = true
+                        launchSingleTop = true //Prevent to open the same view more than one time
+
+                        // Lógica de decisión para restoreState:
+                        // No restaures si:
+                        // 1. La sesión no estaba iniciada antes (es una sesión nueva).
+                        // 2. O, la sesión estaba iniciada PERO la fecha seleccionada ahora es DIFERENTE a la anterior.
+                        val shouldRestore =
+                            sessionPreviouslyStarted && (previousSelectedDateMillis == newSelectedDateMillis)
+                        if (shouldRestore) {
+                            logDebug(
+                                "TrainingScreen",
+                                "Session was already started. Setting restoreState = true"
+                            )
+                            restoreState = true
+                        } else {
+                            logDebug(
+                                "TrainingScreen",
+                                "Session is starting now (or was not started). Setting restoreState = false"
+                            )
+                            restoreState = false
+                        }
                     }
                 }
             },

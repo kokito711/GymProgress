@@ -44,6 +44,7 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.navigation.compose)
+            implementation(compose.materialIconsExtended)
 
             //date time management
             implementation(libs.kotlinx.datetime)

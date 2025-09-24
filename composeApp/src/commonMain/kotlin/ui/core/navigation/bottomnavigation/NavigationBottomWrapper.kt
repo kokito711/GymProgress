@@ -6,6 +6,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import androidx.savedstate.read
+import expects.logDebug
 import ui.core.navigation.Routes
 import ui.tabs.records.RecordsScreen
 import ui.tabs.stats.StatsScreen
@@ -32,7 +34,8 @@ fun NavigationBottomWrapper(navController: NavHostController) {
             route = "${Routes.StartSession.route}?date={date}",
             arguments = listOf(navArgument("date") { type = NavType.LongType; defaultValue = -1L })
         ) { backStackEntry ->
-            val date = backStackEntry.arguments?.getLong("date")
+            val date = backStackEntry.arguments?.read { getLong("date") }
+            logDebug("NavWrapper", "Date argument from NavHost: $date")
             Session(navController, date)
         }
     }

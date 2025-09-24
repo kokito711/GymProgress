@@ -19,19 +19,29 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import domain.model.training.Exercise
-import domain.model.training.TrainingViewModel
+import expects.logDebug
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+import presentation.TrainingViewModel
 import ui.elements.training.EmptyExerciseList
 import ui.elements.training.ExerciseList
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalTime::class)
 @Composable
 fun Session(
     navController: NavHostController,
     date: Long?,
     trainingViewModel: TrainingViewModel = viewModel()
 ) {
+    logDebug(
+        tag = "Session", message = "Session Screen - date: ${
+            Instant.fromEpochMilliseconds(date!!).toLocalDateTime(TimeZone.UTC)
+        }"
+    )
     val formattedDate = trainingViewModel.getFormattedDate(date)
-
+    logDebug("SessionComposable", "Formatted date: $formattedDate")
     //val exercises: List<Exercise> = emptyList()
     val exercises: List<Exercise> = listOf(
         Exercise("Exercise 1", "30"),

@@ -8,12 +8,14 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import expects.logDebug
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalTime::class)
 @Composable
 fun TrainingDatePicker(onDateSelected: (Long) -> Unit, onDismiss: () -> Unit) {
     val datePickerState = rememberDatePickerState(
@@ -30,6 +32,7 @@ fun TrainingDatePicker(onDateSelected: (Long) -> Unit, onDismiss: () -> Unit) {
         }
     )
     val selectedDate = datePickerState.selectedDateMillis
+    logDebug("MyCustomDatePicker", "Confirming with date: $selectedDate")
 
     DatePickerDialog(
         onDismissRequest = { onDismiss() },
