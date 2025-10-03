@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import domain.model.training.Exercise
+import domain.training.model.training.Exercise
 import expects.logDebug
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime

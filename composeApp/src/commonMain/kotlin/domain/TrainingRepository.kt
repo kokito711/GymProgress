@@ -1,7 +1,10 @@
 package domain
 
-import domain.model.TrainingModel
+import domain.training.model.TrainingModel
+import kotlinx.coroutines.flow.Flow
 
 interface TrainingRepository {
-    suspend fun getTrainingList(): List<TrainingModel>
+    fun startNewTraining(date: Long, startTime: Long): Long?
+    fun finishTraining(trainingId: Long, endTime: Long)
+    fun getAllTrainings(pageSize: Long, pageNumber: Long): Flow<List<TrainingModel>>
 }

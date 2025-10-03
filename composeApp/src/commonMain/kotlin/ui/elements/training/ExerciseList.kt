@@ -15,7 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import domain.model.training.Exercise
+import domain.training.model.training.Exercise
 
 @Composable
 fun ExerciseList(exercises: List<Exercise>) {

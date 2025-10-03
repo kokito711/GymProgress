@@ -1,0 +1,26 @@
+CREATE TABLE training (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    date INTEGER NOT NULL,            -- save date as timestamp (Long)
+    start_time INTEGER NOT NULL,      -- save time as timestamp (Long)
+    end_time INTEGER                  -- Nullable only filled when training ends
+);
+
+insert:
+INSERT INTO training(date, start_time)
+VALUES (?, ?);
+
+selectLastInsertedId:
+SELECT last_insert_rowid();
+
+updateEndTime:
+UPDATE training SET end_time = ? WHERE id = ?;
+
+getTrainingById:
+SELECT * FROM training WHERE id = ?;
+
+getAllTrainingsPaginated:
+SELECT *
+FROM training
+ORDER BY date DESC, start_time DESC
+LIMIT :limit
+OFFSET :offset;

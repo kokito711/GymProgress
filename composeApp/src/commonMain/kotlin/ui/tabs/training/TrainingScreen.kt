@@ -25,12 +25,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import domain.model.training.Session
 import expects.logDebug
 import presentation.TrainingViewModel
 import ui.core.navigation.trainingnavigation.TrainingMenuItem
 import ui.elements.training.TrainingDatePicker
-import ui.elements.training.session.EmptySessionList
 import ui.elements.training.session.SessionList
 
 
@@ -55,8 +53,9 @@ fun TrainingScreen(
             listOf(TrainingMenuItem.StartSession())
         }
     }
-    //val sessions: List<Session> = emptyList()
-    val sessions: List<Session> = listOf(
+    val savedSessions by trainingViewModel.savedTrainings.collectAsState()
+
+    /*val sessions: List<Session> = listOf(
         Session("Session 1", "30"),
         Session("Session 2", "45"),
         Session("Session 3", "60"),
@@ -73,7 +72,7 @@ fun TrainingScreen(
         Session("Session 14", "45"),
         Session("Session 15", "60"),
         Session("Session 16", "30"),
-    )
+    ).plus(trainingViewModel.getSavedTrainings())*/
 
     Column(Modifier.fillMaxSize()) {
         TopAppBar(
@@ -99,6 +98,7 @@ fun TrainingScreen(
                                     // Si es FinishSession, navegar directamente
                                     trainingViewModel.setSelectedDate(null)
                                     trainingViewModel.setSessionStarted(false)
+                                    trainingViewModel.finishCurrentTrainingSession()
                                 }
                                 expanded = false
                             },
@@ -112,17 +112,14 @@ fun TrainingScreen(
             modifier = Modifier
                 .background(Color.LightGray) // Optional background color
         ) {
-            if (sessions.isEmpty()) {
-                EmptySessionList()
-            } else {
-                SessionList(sessions = sessions)
-            }
+            SessionList(sessions = savedSessions)
         }
     }
 
     if (showDatePicker) {
         TrainingDatePicker(
             onDateSelected = { newSelectedDateMillis -> // Renombrado para claridad
+                trainingViewModel.startNewTrainingSession(newSelectedDateMillis)
                 logDebug("TrainingScreen", "Selected date (ms since epoch): $newSelectedDateMillis")
                 trainingViewModel.setSelectedDate(newSelectedDateMillis)
                 showDatePicker = false
@@ -152,10 +149,6 @@ fun TrainingScreen(
                         }
                         launchSingleTop = true //Prevent to open the same view more than one time
 
-                        // Lógica de decisión para restoreState:
-                        // No restaures si:
-                        // 1. La sesión no estaba iniciada antes (es una sesión nueva).
-                        // 2. O, la sesión estaba iniciada PERO la fecha seleccionada ahora es DIFERENTE a la anterior.
                         val shouldRestore =
                             sessionPreviouslyStarted && (previousSelectedDateMillis == newSelectedDateMillis)
                         if (shouldRestore) {

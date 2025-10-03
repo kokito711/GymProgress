@@ -15,7 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import domain.model.training.Session
+import domain.training.model.training.Session
 
 @Composable
 fun SessionList(sessions: List<Session>) {
@@ -24,6 +24,7 @@ fun SessionList(sessions: List<Session>) {
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     )
+    //TODO How do I know the id of each session to pass it to the Session screen?
     { items(sessions) { exercise -> SessionItem(session = exercise) } }
 }
 
@@ -35,7 +36,7 @@ fun SessionItem(session: Session) {
             .background(Color.White)
             .padding(16.dp)
     ) {
-        Text(text = session.name, style = MaterialTheme.typography.titleMedium)
+        Text(text = session.date, style = MaterialTheme.typography.titleMedium)
         Text(text = "Duration: ${session.duration}", style = MaterialTheme.typography.bodyMedium)
     }
 }
