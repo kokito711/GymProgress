@@ -23,9 +23,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import expects.logDebug
+import org.koin.compose.viewmodel.koinViewModel
 import presentation.TrainingViewModel
 import ui.core.navigation.trainingnavigation.TrainingMenuItem
 import ui.elements.training.TrainingDatePicker
@@ -36,7 +36,7 @@ import ui.elements.training.session.SessionList
 @Composable
 fun TrainingScreen(
     navController: NavHostController,
-    trainingViewModel: TrainingViewModel = viewModel()
+    trainingViewModel: TrainingViewModel = koinViewModel()
 ) {
     var expanded by remember { mutableStateOf(false) }
     var showDatePicker by remember { mutableStateOf(false) }
@@ -54,25 +54,6 @@ fun TrainingScreen(
         }
     }
     val savedSessions by trainingViewModel.savedTrainings.collectAsState()
-
-    /*val sessions: List<Session> = listOf(
-        Session("Session 1", "30"),
-        Session("Session 2", "45"),
-        Session("Session 3", "60"),
-        Session("Session 4", "30"),
-        Session("Session 5", "45"),
-        Session("Session 6", "60"),
-        Session("Session 7", "30"),
-        Session("Session 8", "45"),
-        Session("Session 9", "60"),
-        Session("Session 10", "30"),
-        Session("Session 11", "45"),
-        Session("Session 12", "60"),
-        Session("Session 13", "30"),
-        Session("Session 14", "45"),
-        Session("Session 15", "60"),
-        Session("Session 16", "30"),
-    ).plus(trainingViewModel.getSavedTrainings())*/
 
     Column(Modifier.fillMaxSize()) {
         TopAppBar(

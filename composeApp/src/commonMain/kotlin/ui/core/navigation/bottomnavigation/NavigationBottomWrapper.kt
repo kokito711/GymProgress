@@ -34,7 +34,18 @@ fun NavigationBottomWrapper(navController: NavHostController) {
             route = "${Routes.StartSession.route}?date={date}",
             arguments = listOf(navArgument("date") { type = NavType.LongType; defaultValue = -1L })
         ) { backStackEntry ->
-            val date = backStackEntry.arguments?.read { getLong("date") }
+            // Use the savedstate 'read' extension which provides a cross-platform way to access arguments.
+            // In KMP, we often use getString and parse, or check for specific Long accessors.
+            val date = backStackEntry.arguments?.read {
+                // If getLong is not available in commonMain, we fallback to string/long retrieval
+                // Depending on the version, getLong might be platform-specific.
+                try {
+                    getLong("date")
+                } catch (e: Exception) {
+                    getString("date").toLongOrNull() ?: -1L
+                }
+            } ?: -1L
+
             logDebug("NavWrapper", "Date argument from NavHost: $date")
             Session(navController, date)
         }

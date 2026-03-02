@@ -7,7 +7,6 @@ import db.Training
 import domain.TrainingRepository
 import domain.training.model.TrainingModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

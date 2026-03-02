@@ -16,12 +16,12 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import domain.training.model.training.Exercise
 import expects.logDebug
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import org.koin.compose.viewmodel.koinViewModel
 import presentation.TrainingViewModel
 import ui.elements.training.EmptyExerciseList
 import ui.elements.training.ExerciseList
@@ -33,7 +33,7 @@ import kotlin.time.Instant
 fun Session(
     navController: NavHostController,
     date: Long?,
-    trainingViewModel: TrainingViewModel = viewModel()
+    trainingViewModel: TrainingViewModel = koinViewModel()
 ) {
     logDebug(
         tag = "Session", message = "Session Screen - date: ${
