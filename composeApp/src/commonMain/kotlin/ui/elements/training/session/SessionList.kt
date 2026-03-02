@@ -1,6 +1,7 @@
 package ui.elements.training.session
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -18,22 +19,25 @@ import androidx.compose.ui.unit.dp
 import domain.training.model.training.Session
 
 @Composable
-fun SessionList(sessions: List<Session>) {
+fun SessionList(sessions: List<Session>, onSessionClick: (Session) -> Unit) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
-    )
-    //TODO How do I know the id of each session to pass it to the Session screen?
-    { items(sessions) { exercise -> SessionItem(session = exercise) } }
+    ) {
+        items(sessions) { session ->
+            SessionItem(session = session, onClick = { onSessionClick(session) })
+        }
+    }
 }
 
 @Composable
-fun SessionItem(session: Session) {
+fun SessionItem(session: Session, onClick: () -> Unit) {
     Column(
         modifier = Modifier
-            .fillMaxWidth() // Make each item fill the width
+            .fillMaxWidth()
             .background(Color.White)
+            .clickable { onClick() }
             .padding(16.dp)
     ) {
         Text(text = session.date, style = MaterialTheme.typography.titleMedium)

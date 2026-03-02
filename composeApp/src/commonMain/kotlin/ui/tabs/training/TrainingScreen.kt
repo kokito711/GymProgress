@@ -27,6 +27,7 @@ import androidx.navigation.NavHostController
 import expects.logDebug
 import org.koin.compose.viewmodel.koinViewModel
 import presentation.TrainingViewModel
+import ui.core.navigation.Routes
 import ui.core.navigation.trainingnavigation.TrainingMenuItem
 import ui.elements.training.TrainingDatePicker
 import ui.elements.training.session.SessionList
@@ -93,7 +94,14 @@ fun TrainingScreen(
             modifier = Modifier
                 .background(Color.LightGray) // Optional background color
         ) {
-            SessionList(sessions = savedSessions)
+            SessionList(
+                sessions = savedSessions,
+                onSessionClick = { session ->
+                    // Navegar a la pantalla de detalles usando el ID de la sesión
+                    // Nota: Routes.StartSession.route se usa aquí porque es la ruta que acepta el parámetro date (o id)
+                    navController.navigate(route = "${Routes.StartSession.route}?date=${session.id}")
+                }
+            )
         }
     }
 

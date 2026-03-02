@@ -1,0 +1,24 @@
+CREATE TABLE exercise (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    session_id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    duration TEXT NOT NULL,
+    description TEXT,
+    comments TEXT,
+    FOREIGN KEY (session_id) REFERENCES training(id) ON DELETE CASCADE
+);
+
+getAllBySession:
+SELECT * FROM exercise WHERE session_id = ?;
+
+insert:
+INSERT INTO exercise(session_id, name, duration, description, comments)
+VALUES (?, ?, ?, ?, ?);
+
+update:
+UPDATE exercise 
+SET name = ?, duration = ?, description = ?, comments = ? 
+WHERE id = ?;
+
+delete:
+DELETE FROM exercise WHERE id = ?;
