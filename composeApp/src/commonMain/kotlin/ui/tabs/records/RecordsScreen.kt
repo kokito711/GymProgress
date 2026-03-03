@@ -1,4 +1,4 @@
-package ui.home.tabs.training
+package ui.tabs.records
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -7,8 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
-
 @Composable
-fun TrainingScreen() {
-    Box(Modifier.fillMaxSize().background(Color.Red))
+fun RecordsScreen() {
+    Box(Modifier.fillMaxSize().background(Color.Yellow))
 }
