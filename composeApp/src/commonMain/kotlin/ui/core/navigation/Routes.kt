@@ -13,4 +13,6 @@ sealed class Routes(val route: String) {
     data object AddActivity : Routes("addActivity")
     data object FinishSession : Routes("finishActivity")
     data object StartSession : Routes("startSession")
+    data object ExerciseDetail : Routes("exerciseDetail")
+    data object AddExercise : Routes("addExercise")
 }

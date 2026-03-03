@@ -11,6 +11,9 @@ CREATE TABLE exercise (
 getAllBySession:
 SELECT * FROM exercise WHERE session_id = ?;
 
+getById:
+SELECT * FROM exercise WHERE id = ?;
+
 insert:
 INSERT INTO exercise(session_id, name, duration, description, comments)
 VALUES (?, ?, ?, ?, ?);

@@ -1,6 +1,8 @@
 package ui.elements.training
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -18,20 +20,37 @@ import androidx.compose.ui.unit.dp
 import domain.training.model.training.Exercise
 
 @Composable
-fun ExerciseList(exercises: List<Exercise>) {
+fun ExerciseList(
+    exercises: List<Exercise>,
+    onExerciseClick: (Exercise) -> Unit,
+    onExerciseLongClick: (Exercise) -> Unit
+) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) { items(exercises) { exercise -> ExerciseItem(exercise = exercise) } }
+    ) {
+        items(exercises) { exercise ->
+            ExerciseItem(
+                exercise = exercise,
+                onClick = { onExerciseClick(exercise) },
+                onLongClick = { onExerciseLongClick(exercise) }
+            )
+        }
+    }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ExerciseItem(exercise: Exercise) {
+fun ExerciseItem(exercise: Exercise, onClick: () -> Unit, onLongClick: () -> Unit) {
     Column(
         modifier = Modifier
-            .fillMaxWidth() // Make each item fill the width
+            .fillMaxWidth()
             .background(Color.White)
+            .combinedClickable(
+                onClick = onClick,
+                onLongClick = onLongClick
+            )
             .padding(16.dp)
     ) {
         Text(text = exercise.name, style = MaterialTheme.typography.titleMedium)

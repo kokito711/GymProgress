@@ -1,6 +1,8 @@
 package data.database.dao
 
 import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToOneOrNull
+import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import db.GymProgressDatabase
 import db.Exercise as ExerciseDb
@@ -30,6 +32,14 @@ class ExerciseRepositoryImpl(private val database: GymProgressDatabase) : Exerci
             .onEach { exercises ->
                 logDebug("ExerciseRepositoryImpl", "Retrieved ${exercises.size} exercises for session $sessionId")
             }
+    }
+
+    override fun getExerciseById(exerciseId: Long): Flow<Exercise?> {
+        logDebug("ExerciseRepositoryImpl", "getExerciseById called - exerciseId: $exerciseId")
+        return exerciseQueries.getById(exerciseId)
+            .asFlow()
+            .mapToOneOrNull(Dispatchers.IO)
+            .map { it?.toDomainModel() }
     }
 
     override suspend fun updateExercise(exercise: Exercise) {
